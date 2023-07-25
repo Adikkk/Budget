@@ -6,6 +6,7 @@ An application that allows you to monitor your home budget.
 * RabbitMQ
 * MSSQL
 * JavaScript
+* Bootsrap v5.1
 
 ## ToDo
 - [x] Expenses
