@@ -1,0 +1,37 @@
+version: '3.4'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: budget-mssql
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_PID: Express
+      SA_PASSWORD: 1234
+    ports:
+      - "1433:1433"
+
+  rabbitmq:
+    container_name: budget-rabbitmq
+    image: rabbitmq:3.7.7-management-alpine
+    ports:
+      - "15672:15672" # Important: In a production environment your should remove the external port
+      - "5672:5672" # Important: In a production environment your should remove the external port
+
+  budget.api:
+    container_name: budget-api
+    restart: always
+    image: budgetapi
+    build:
+      context: .
+      dockerfile: Budget.API/Dockerfile
+    depends_on:
+      - mssql
+      - rabbitmq
+      - nosql.data
+      - redis.cache
+    ports:
+      - "5000:80"
+      - "5443:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
