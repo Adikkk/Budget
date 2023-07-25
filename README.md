@@ -7,6 +7,7 @@ An application that allows you to monitor your home budget.
 * MSSQL
 * JavaScript
 * Bootsrap v5.1
+* Docker
 
 ## ToDo
 - [x] Expenses
