@@ -13,5 +13,5 @@ An application that allows you to monitor your home budget.
 - [x] Expenses
 - [x] Incomes 
 - [ ] Import of csv files with expenses/incomes
-- [ ] Dashboard with statistics
+- [x] Dashboard with statistics
 - [ ] Spending analysis using AI
