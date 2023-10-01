@@ -5,7 +5,7 @@
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Expense List</h1>
+        <h1 class="h2">Income List</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
                 <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -14,7 +14,7 @@
         </div>
     </div>
     <p>
-        <a class="btn btn-primary" asp-controller="Expense" asp-action="Create">Create New</a>
+        <a class="btn btn-primary" asp-controller="Income" asp-action="Create">Create New</a>
     </p>
 
     <div id="wrapper"></div>
@@ -23,12 +23,12 @@
 
 @* Modals *@
 
-<div class="expense-delete-modals"></div>
+<div class="income-delete-modals"></div>
 
-<script src="~/js/Expense/Expense.js"></script>
+<script src="~/js/Income/Income.js"></script>
 <script>
     window.onload = (event) => {
         initIndex();
     };
-    
+
 </script>

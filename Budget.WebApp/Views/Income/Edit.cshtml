@@ -1,0 +1,68 @@
+﻿@model Budget.WebApp.Models.Income.IncomeEditViewModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Edit income</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+            </div>
+        </div>
+    </div>
+    <div id="income-edit">
+        <div>
+            <div class="mb-3 d-none">
+                <label for="income-id-label" class="form-label">Id</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="income-id-label" bkey="id" value="@Model.Id">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="income-name-label" class="form-label">Name</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="income-name-label" bkey="name">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="income-description-label" class="form-label">Description</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="income-description-label" bkey="description">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="income-category-label" class="form-label">Category</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="income-category-label" bkey="category">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="income-amount-label" class="form-label">Amount</label>
+                <div class="input-group">
+                    <input type="number" class="form-control" id="income-amount-label" bkey="amount">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="income-payment-date-label" class="form-label">Payment Date</label>
+                <div class="input-group">
+                    <input type="datetime-local" class="form-control" id="income-payment-date-label" bkey="paymentDate">
+                </div>
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-warning" id="edit-save-button"><i data-feather="edit"></i> Save</button>
+            <a class="btn btn-primary" asp-action="Index"><i data-feather="arrow-left"></i> Back</a>
+        </div>
+    </div>
+</main>
+
+<script src="~/js/Income/Income.js"></script>
+<script>
+    window.onload = (event) => {
+        initEdit();
+    };
+
+</script>

@@ -40,7 +40,7 @@ setActiveTab = () => {
         dashboardTabContainer.classList.remove('active');
         incomeTabContainer.classList.remove('active');
 
-    } else if (pathName.includes("Incomes")) {
+    } else if (pathName.includes("Income")) {
         expenseTabContainer.classList.remove('active');
         dashboardTabContainer.classList.remove('active');
         incomeTabContainer.classList.add('active');

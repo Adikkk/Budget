@@ -3,11 +3,11 @@
 };
 
 initDetails = () => {
-    renderExpense('Details');
+    renderIncome('Details');
 };
 
 initEdit = () => {
-    renderExpense('Edit');
+    renderIncome('Edit');
     addEventListeners('Edit');
 }
 
@@ -18,31 +18,31 @@ initCreate = () => {
 addEventListeners = (mode) => {
     if (mode === 'Edit') {
         const saveButton = document.querySelector('#edit-save-button');
-        saveButton.addEventListener('click', editExpense);
+        saveButton.addEventListener('click', editIncome);
     }
     else if (mode === 'Create') {
         const saveButton = document.querySelector('#create-save-button');
-        saveButton.addEventListener('click', createExpense);
+        saveButton.addEventListener('click', createIncome);
     }
 }
 
-getExpenseById = async (id) => {
-    const expense = await $.get({
-        url: `https://localhost:7082/api/expenses/${id}`,
+getIncomeById = async (id) => {
+    const income = await $.get({
+        url: `https://localhost:7082/api/incomes/${id}`,
     });
 
-    return expense;
+    return income;
 };
 
-getExpenses = async () => {
-    const expenses = await $.get({
-        url: 'https://localhost:7082/api/expenses',
+getIncomes = async () => {
+    const incomes = await $.get({
+        url: 'https://localhost:7082/api/incomes',
     });
 
-    return expenses;
+    return incomes;
 };
 
-renderExpense = async (renderType) => {
+renderIncome = async (renderType) => {
     const guidRegex = /(?:\{{0,1}(?:[0-9a-fA-F]){8}-(?:[0-9a-fA-F]){4}-(?:[0-9a-fA-F]){4}-(?:[0-9a-fA-F]){4}-(?:[0-9a-fA-F]){12}\}{0,1})/g;
     let idContainer = document.querySelector('[bkey="id"]');
 
@@ -53,32 +53,31 @@ renderExpense = async (renderType) => {
         idContainer = idContainer.value;
     }
 
-    const expenseId = idContainer.match(guidRegex);
+    const incomeId = idContainer.match(guidRegex);
 
-    const expense = await getExpenseById(expenseId);
+    const income = await getIncomeById(incomeId);
 
-    mapExpense(expense, renderType);
+    mapIncome(income, renderType);
 }
 
-mapExpense = (expense, renderType) => {
+mapIncome = (income, renderType) => {
     const selectors = document.querySelectorAll('[bkey]');
 
     selectors.forEach((selector) => {
         const bkey = selector.getAttribute('bkey');
-        if (bkey in expense) {
+        if (bkey in income) {
             if (renderType === 'Details') {
-                selector.textContent = expense[bkey];
+                selector.textContent = income[bkey];
             }
-            else
-            {
-                selector.value = expense[bkey];
+            else {
+                selector.value = income[bkey];
             }
         }
     });
 }
 
 initializeTable = async () => {
-    const expenses = await getExpenses();
+    const incomes = await getIncomes();
 
     new gridjs.Grid({
         columns: [
@@ -107,19 +106,19 @@ initializeTable = async () => {
 
                     const editButton = gridjs.h('button', {
                         className: 'py-2 px-4 border rounded-md text-white btn btn-info table-button',
-                        onClick: () => location.href = `/Expense/Edit/${row.cells[0].data}`
+                        onClick: () => location.href = `/Income/Edit/${row.cells[0].data}`
                     }, 'Edit');
 
                     const detailsButton = gridjs.h('button', {
                         className: 'py-2 px-4 border rounded-md text-white btn btn-warning table-button',
-                        onClick: () => location.href = `/Expense/Details/${row.cells[0].data}`
+                        onClick: () => location.href = `/Income/Details/${row.cells[0].data}`
                     }, 'Details');
 
                     const deleteButton = gridjs.h('button', {
                         className: 'py-2 px-4 border rounded-md text-white btn btn-danger table-button',
                         onClick: () => {
                             generateDeleteModal(row.cells[0].data);
-                            $('#delete-expense-modal').modal('show');
+                            $('#delete-income-modal').modal('show');
                         }
                     }, 'Delete');
 
@@ -132,26 +131,26 @@ initializeTable = async () => {
                 }
             },
         ],
-        data: expenses
+        data: incomes
     }).render(document.getElementById("wrapper"));
 }
 
-editExpense = () => {
+editIncome = () => {
     const request = serializeData("Edit");
 
-     $.ajax({
-        url: 'https://localhost:7082/api/expenses',
+    $.ajax({
+        url: 'https://localhost:7082/api/incomes',
         type: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(request),
         success: () => {
-            toastr.success("Successfully updated expense");
+            toastr.success("Successfully updated income");
             window.setTimeout(function () {
                 toastr.clear();
-                location.href = "/Expense";
+                location.href = "/Income";
             }, 2000);
         }
-     });
+    });
 
 }
 
@@ -159,10 +158,10 @@ serializeData = (mode) => {
     let container = "";
 
     if (mode === 'Edit') {
-        container = document.querySelector('#expense-edit');
+        container = document.querySelector('#income-edit');
     }
-    else if (mode === 'Create'){
-        container = document.querySelector('#expense-create');
+    else if (mode === 'Create') {
+        container = document.querySelector('#income-create');
     }
     const selectors = container.querySelectorAll('input');
 
@@ -185,39 +184,39 @@ serializeData = (mode) => {
     return request;
 }
 
-createExpense = () => {
+createIncome = () => {
     const request = serializeData('Create');
 
     $.ajax({
-        url: 'https://localhost:7082/api/expenses',
+        url: 'https://localhost:7082/api/incomes',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(request),
         success: () => {
-            toastr.success("Successfully created expense");
+            toastr.success("Successfully created income");
             window.setTimeout(function () {
                 toastr.clear();
-                location.href = "/Expense";
+                location.href = "/Income";
             }, 2000);
         }
     });
 }
 
 generateDeleteModal = (id) => {
-    const modalsContainer = document.querySelector('.expense-delete-modals');
+    const modalsContainer = document.querySelector('.income-delete-modals');
 
     modalsContainer.innerHTML = `
-<div class="modal fade" id="delete-expense-modal" expense-id="${id}" tabindex="-1" role="dialog" aria-labelledby="delete-expense-modal-label" aria-hidden="true">
+<div class="modal fade" id="delete-income-modal" income-id="${id}" tabindex="-1" role="dialog" aria-labelledby="delete-income-modal-label" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="delete-expense-modal-label">Delete expense</h5>
+                <h5 class="modal-title" id="delete-income-modal-label">Delete income</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to remove this expense? ID: ${id}</p>
+                <p>Are you sure you want to remove this income? ID: ${id}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -228,16 +227,16 @@ generateDeleteModal = (id) => {
 </div>
     `;
 
-    document.querySelector(`[expense-id="${id}"] .delete-button`).addEventListener('click', () => {
+    document.querySelector(`[income-id="${id}"] .delete-button`).addEventListener('click', () => {
         $.ajax({
-            url: `https://localhost:7082/api/expenses/${id}`,
+            url: `https://localhost:7082/api/incomes/${id}`,
             type: 'DELETE',
             success: () => {
-                $('#delete-expense-modal').modal('hide');
-                toastr.success('Successfully deleted expense.');
+                $('#delete-income-modal').modal('hide');
+                toastr.success('Successfully deleted income.');
                 window.setTimeout(function () {
                     toastr.clear();
-                    location.href = "/Expense";
+                    location.href = "/Income";
                 }, 2000);
             }
         });

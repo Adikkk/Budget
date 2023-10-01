@@ -101,7 +101,7 @@ namespace Budget.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] EditIncomeRequestModel request)
+        public async Task<IActionResult> Update(EditIncomeRequestModel request)
         {
             var command = new EditIncomeCommand(
                 request.Id,

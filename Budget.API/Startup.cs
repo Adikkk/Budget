@@ -62,8 +62,8 @@ namespace Budget.Api
         {
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
 
-            eventBus.Subscribe<ExpenseCreatedEvent>();
-            eventBus.Subscribe<IncomeCreatedEvent>();
+            //eventBus.Subscribe<ExpenseCreatedEvent>();
+            //eventBus.Subscribe<IncomeCreatedEvent>();
         }
 
 

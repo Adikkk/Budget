@@ -50,9 +50,4 @@
     <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\js\Dashboard\" />
-    <Folder Include="wwwroot\js\Incomes\" />
-  </ItemGroup>
-
 </Project>

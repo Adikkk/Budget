@@ -13,6 +13,7 @@ namespace Budget.API.Controllers
 {
     [Route("api/expenses")]
     [Produces("application/json")]
+    [ApiController]
     public class ExpenseController : Controller
     {
         private readonly ICommandDispatcher _commandDispatcher;
@@ -113,7 +114,7 @@ namespace Budget.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] EditExpenseRequestModel request)
+        public async Task<IActionResult> Update(EditExpenseRequestModel request)
         {
             var command = new EditExpenseCommand(
                 request.Id,
